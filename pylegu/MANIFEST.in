@@ -1,0 +1,22 @@
+include README.md setup.cfg CMakeLists.txt LICENSE
+
+# Examples
+recursive-include examples *.py *.apk
+
+# Sources
+recursive-include src *.cpp *.h *.hpp *.in
+recursive-include include *.h *.hpp *.in
+
+recursive-include third-party *
+recursive-include cmake *
+
+# Bindings
+recursive-include bindings *.cpp *.hpp *.h *.txt
+prune bindings/python/build
+
+# Global exclude
+recursive-exclude *.egg-info *.so
+
+# Documentation
+recursive-include doc *
+
