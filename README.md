@@ -3,6 +3,8 @@
 Scripts to unpack Android applications protected by Tencent Legu. It only works with versions
 **4.1.0.15** and **4.1.0.18** of Legu.
 
+Blog post: https://blog.quarkslab.com/a-glimpse-into-tencents-legu-packer.html
+
 ## Overview
 
 The original DEX files are located in ``assets/0OO00l111l1l`` with the following layout:
