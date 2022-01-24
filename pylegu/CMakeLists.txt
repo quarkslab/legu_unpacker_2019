@@ -47,6 +47,7 @@ ExternalProject_Add(ucl
   URL               ${UCL_URL}
   PREFIX            ${UCL_PREFIX_DIR}
   CONFIGURE_COMMAND ${UCL_PREFIX_DIR}/src/ucl/configure --prefix=${UCL_INSTALL_DIR} --with-pic
+        "CFLAGS=${CMAKE_C_FLAGS} -std=gnu89"
   BUILD_COMMAND     ${MAKE}
   BUILD_IN_SOURCE   1
   UPDATE_COMMAND    ""
