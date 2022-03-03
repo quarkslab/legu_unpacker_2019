@@ -29,7 +29,14 @@ To compile and install ``pylegu``:
 
 ```bash
 $ cd pylegu
-$ python3.7 ./setup.py build -j4 install --user
+$ python3 ./setup.py build -j4 install --user
+$ python -c "import pylegu"
+```
+Looks like -std default got bumped up to either c99 or c11 with newer gcc releases
+To fix whether your compiler passes the ACC conformance test... FAILED and rebuild again
+```bash
+$ export CFLAGS="$CFLAGS -std=c90 -fPIC"
+$ python3 ./setup.py build -j4 install --user
 $ python -c "import pylegu"
 ```
 
