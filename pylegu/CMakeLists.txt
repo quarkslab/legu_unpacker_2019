@@ -28,7 +28,7 @@ if(CCACHE_FOUND)
   set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
 endif()
 
-set(PYBIND11_VERSION 2.4.3)
+set(PYBIND11_VERSION 2.10.4)
 set(PYBIND11_URL "${THIRD_PARTY_DIRECTORY}/pybind11-${PYBIND11_VERSION}.zip" CACHE STRING "URL to the Pybind11 repo")
 ExternalProject_Add(pybind11
   URL               ${PYBIND11_URL}
@@ -42,11 +42,12 @@ set(UCL_VERSION 1.03)
 set(UCL_URL "${THIRD_PARTY_DIRECTORY}/ucl-${UCL_VERSION}.tar.gz" CACHE STRING "URL to the UCL")
 set(UCL_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/UCL)
 set(UCL_PREFIX_DIR  ${UCL_INSTALL_DIR})
+set(UCL_CFLAGS "${CMAKE_C_FLAGS} -std=c89 -Wno-implicit-function-declaration")
 
 ExternalProject_Add(ucl
   URL               ${UCL_URL}
   PREFIX            ${UCL_PREFIX_DIR}
-  CONFIGURE_COMMAND ${UCL_PREFIX_DIR}/src/ucl/configure --prefix=${UCL_INSTALL_DIR} --with-pic
+  CONFIGURE_COMMAND ${UCL_PREFIX_DIR}/src/ucl/configure --prefix=${UCL_INSTALL_DIR} --with-pic CFLAGS=${UCL_CFLAGS}
   BUILD_COMMAND     ${MAKE}
   BUILD_IN_SOURCE   1
   UPDATE_COMMAND    ""
@@ -54,7 +55,7 @@ ExternalProject_Add(ucl
 )
 include_directories("${UCL_INSTALL_DIR}/include")
 
-set(Python_ADDITIONAL_VERSIONS 3.7 3.6 3.5 3.4)
+find_package(Python REQUIRED Development)
 find_package(PythonLibsNew REQUIRED)
 
 add_library(pylegu SHARED pyLegu.cpp)
@@ -69,7 +70,7 @@ target_include_directories(pylegu PUBLIC
   "${UCL_INSTALL_DIR}/include"
 )
 
-target_link_libraries(pylegu ${UCL_INSTALL_DIR}/lib/libucl.a)
+target_link_libraries(pylegu ${UCL_INSTALL_DIR}/lib/libucl.a Python::Python)
 
 add_dependencies(pylegu pybind11 ucl)
 

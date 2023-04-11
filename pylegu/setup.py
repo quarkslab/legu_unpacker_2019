@@ -8,8 +8,9 @@ import pathlib
 from pkg_resources import get_distribution
 
 from setuptools import setup, Extension
-from setuptools.command.build_ext import build_ext, copy_file
+from setuptools.command.build_ext import build_ext
 
+from distutils.file_util import copy_file
 from distutils.version import LooseVersion
 
 from distutils import log
