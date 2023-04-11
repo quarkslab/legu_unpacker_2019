@@ -80,7 +80,28 @@ PYBIND11_MODULE(pylegu, legu_module) {
             nullptr);
 
         if (res != UCL_E_OK) {
-          py::print("[-] Decompression finished with error: {:d}"_s.format(res));
+          std::string s;
+          if (res == UCL_E_INVALID_ARGUMENT)
+            s = "INVALID ARGUMENT";
+          else if (res == UCL_E_OUT_OF_MEMORY)
+            s = "OUT OF MEMORY";
+          else if (res == UCL_E_NOT_COMPRESSIBLE)
+            s = "NOT COMPRESSIBLE";
+          else if (res == UCL_E_INPUT_OVERRUN)
+            s = "INPUT OVERRUN";
+          else if (res == UCL_E_OUTPUT_OVERRUN)
+            s = "OUTPUT OVERRUN";
+          else if (res == UCL_E_LOOKBEHIND_OVERRUN)
+            s = "LOOKBEHIND OVERRUN";
+          else if (res == UCL_E_EOF_NOT_FOUND)
+            s = "EOF NOT FOUND";
+          else if (res == UCL_E_INPUT_NOT_CONSUMED)
+            s = "INPUT NOT CONSUMED";
+          else if (res == UCL_E_OVERLAP_OVERRUN)
+            s = "OVERLAP OVERRUN";
+          else
+            s = "{:d}"_s.format(res);
+          py::print("[-] Decompression finished with error: {:s}"_s.format(s));
         }
 
         return dst;
